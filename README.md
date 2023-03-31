@@ -55,7 +55,7 @@ For one of the requirements the application is covered by 30% tests
 - Install IntelliJ IDEA Ultimate or other IDE
 - Install Postgresql and create database
 - Clone this project
-- Add your connection connection url, username and password 
+- Add your connection url, username and password credentials
 for connection to Postgres DB in application.properties file
 - Run the application
 - Execute the requests using an HTTP-client (Postman, Katalon Studio, etc)
