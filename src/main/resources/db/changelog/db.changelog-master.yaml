@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - include:
+      file: /db/changelog/changes/create-employees-seq.sql
+  - include:
+      file: /db/changelog/changes/create-projects-seq.sql
+  - include:
+      file: /db/changelog/changes/create-employees-table.sql
+  - include:
+      file: /db/changelog/changes/create-projects-table.sql
+  - include:
+      file: /db/changelog/changes/create-employees_projects-table.sql
