@@ -1,0 +1,31 @@
+# Stage 1: Build Stage
+FROM maven:3.9.6-eclipse-temurin-17 AS build
+
+WORKDIR /usr/src/myapp
+
+COPY ./pom.xml .
+
+COPY ./checkstyle.xml .
+
+COPY ./src ./src
+
+RUN mvn clean package -DskipTests
+
+# Stage 2: Run Stage
+FROM openjdk:17-jdk-slim as run
+
+WORKDIR /usr/src/myapp
+
+RUN useradd -m -s /bin/sh -u 1234 nonroot
+
+COPY --from=build /usr/src/myapp/target/internal-company-management-app-0.0.1-SNAPSHOT.jar myapp.jar
+
+RUN apt update && apt install -y curl
+
+RUN chown -R nonroot:nonroot /usr/src/myapp
+
+USER nonroot
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "/usr/src/myapp/myapp.jar"]

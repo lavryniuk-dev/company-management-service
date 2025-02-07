@@ -1,0 +1,5 @@
+#!/bin/sh
+
+unset DATABASE_NAME
+unset DATABASE_USER
+unset LIQUIBASE_MIGRATIONS
