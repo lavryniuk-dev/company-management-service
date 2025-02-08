@@ -40,23 +40,31 @@ For one of the requirements the application is covered by 30% tests
 
 ### Technologies
 *The following stack of technologies was used in the project:*
-* JUnit 5
-* Lombok
+* Java
+* Spring Boot
+* PostgreSQL
+* Tomcat
+* Nginx
+* Docker
+* Docker Compose
 * Liquibase
-* Postgresql
-* Spring Boot Core
-* Spring Boot Web
-* Spring Boot Data JPA
+* Lombok
+* JUnit 5
 * Maven checkstyle plugin
 
 ### Setup
 *Project launch information:*
+
+1. Clone this project
 ```
-- Install IntelliJ IDEA Ultimate or other IDE
-- Install Postgresql and create database
-- Clone this project
-- Add your connection url, username and password credentials
-for connection to Postgres DB in application.properties file
-- Run the application
-- Execute the requests using an HTTP-client (Postman, Katalon Studio, etc)
+git clone https://github.com/lavryniuk-dev/company-management-service.git
 ```
+2. Run the command to export environment variables
+```
+. ./sets/set-env.sh
+```
+3. Run the command to start the services
+```
+docker compose -f compose.prod.yml up -d --scale api=2
+```
+4. Perform HTTP requests to the available endpoints on localhost on port 8080 using Postman, Katalon Studio, etc.
