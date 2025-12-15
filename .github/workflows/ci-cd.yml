@@ -16,9 +16,10 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t company-management-service:latest -f ./Dockerfile.api.prod
+          docker build -t company-management-service:latest -f ./Dockerfile.api.prod .
   clean:
     runs-on: self-hosted
+    needs: build
 
     steps:
       - name: Clean docker image
