@@ -1,0 +1,26 @@
+name: Build Java Docker Image
+
+on:
+  push:
+    branches:
+      - add-ci-cd
+  pull_request:
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t company-management-service:latest -f ./Dockerfile.api.prod
+  clean:
+    runs-on: self-hosted
+
+    steps:
+      - name: Clean docker image
+        run: |
+          docker rmi company-management-service:latest
