@@ -48,4 +48,4 @@ jobs:
 
       - name: Shutdown
         if: always()
-        run: docker compose -f compose.prod.yml down -v --rmi
+        run: docker compose -f compose.prod.yml down -v --rmi all
