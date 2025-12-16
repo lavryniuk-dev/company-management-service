@@ -47,6 +47,7 @@ For one of the requirements the application is covered by 30% tests
 * Nginx
 * Docker
 * Docker Compose
+* GitHub Actions
 * Liquibase
 * Lombok
 * JUnit 5
@@ -65,6 +66,6 @@ git clone https://github.com/lavryniuk-dev/company-management-service.git
 ```
 3. Run the command to start the services
 ```
-docker compose -f compose.prod.yml up -d --scale api=2
+docker compose -f compose.prod.yml up -d
 ```
 4. Perform HTTP requests to the available endpoints on localhost on port 8080 using Postman, Katalon Studio, etc.

@@ -1,0 +1,31 @@
+name: Build and test Java app
+
+on:
+  push:
+    branches:
+      [master, develop]
+
+jobs:
+
+  test-app:
+    runs-on: linux-docker
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Export env variables
+        run: |
+          . ./sets/set-env.sh
+
+      - name: Start docker-compose
+        run: |
+          docker compose -f compose.prod.yml up -d
+
+      - name: Show logs on failure
+        if: failure()
+        run: docker compose -f compose.prod.yml logs
+
+      - name: Shutdown
+        if: always()
+        run: docker compose -f compose.prod.yml down -v --rmi all
