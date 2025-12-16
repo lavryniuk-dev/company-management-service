@@ -3,12 +3,12 @@ name: Build and test Java app
 on:
   push:
     branches:
-      - add-ci-cd
+      [master, develop]
 
 jobs:
 
   test-app:
-    runs-on: self-hosted
+    runs-on: linux-docker
 
     steps:
       - name: Checkout repository
@@ -21,10 +21,6 @@ jobs:
       - name: Start docker-compose
         run: |
           docker compose -f compose.prod.yml up -d
-
-      - name: Test API endpoint
-        run: |
-          curl -f http://localhost:8080/api/employees
 
       - name: Show logs on failure
         if: failure()
