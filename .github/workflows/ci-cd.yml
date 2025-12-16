@@ -16,12 +16,11 @@ jobs:
 
       - name: Export env variables
         run: |
-          pwd
           . ./sets/set-env.sh
 
       - name: Start docker-compose
         run: |
-          docker compose -f compose.prod.yml up -d
+          docker compose -f compose.prod.yml up -d --scale api=2
 
       - name: Wait for API healthcheck
         run: |
