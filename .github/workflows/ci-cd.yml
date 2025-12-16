@@ -20,7 +20,7 @@ jobs:
 
       - name: Start docker-compose
         run: |
-          docker compose -f compose.prod.yml up -d --scale api=2
+          docker compose -f compose.prod.yml up -d
 
       - name: Test API endpoint
         run: |
