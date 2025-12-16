@@ -24,7 +24,7 @@ jobs:
 
       - name: Test API endpoint
         run: |
-          curl -f http://localhost:8080/api/employees
+          curl -f http://api:8080/api/employees
 
       - name: Show logs on failure
         if: failure()
