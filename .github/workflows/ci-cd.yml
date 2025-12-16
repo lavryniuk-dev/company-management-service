@@ -16,6 +16,7 @@ jobs:
 
       - name: Export env variables
         run: |
+          pwd
           . ./sets/set-env.sh
 
       - name: Start docker-compose
