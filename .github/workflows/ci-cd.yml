@@ -16,8 +16,6 @@ jobs:
 
       - name: Export env variables
         run: |
-          ls ./sets
-          cat pg_secret_password.txt
           . ./sets/set-env.sh
 
       - name: Start docker-compose
