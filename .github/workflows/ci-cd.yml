@@ -1,13 +1,12 @@
-name: Build Java Docker Image
+name: Build and test Java app
 
 on:
   push:
     branches:
       - add-ci-cd
-  pull_request:
 
 jobs:
-  build:
+  build-image:
     runs-on: self-hosted
 
     steps:
@@ -17,11 +16,53 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t company-management-service:latest -f ./Dockerfile.api.prod .
-  clean:
+  
+  test-app:
     runs-on: self-hosted
-    needs: build
 
     steps:
-      - name: Clean docker image
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Export env variables
+        run: |
+          . ./sets/set-env.sh
+
+      - name: Start docker-compose
+        run: |
+          docker compose -f compose.prod.yml up -d
+
+      - name: Wait for API healthcheck
+        run: |
+          echo "Waiting for API to become healthy..."
+          for i in {1..30}; do
+            STATUS=$(docker inspect --format='{{.State.Health.Status}}' $(docker compose ps -q api))
+            if [ "$STATUS" = "healthy" ]; then
+              echo "API is healthy"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "API did not become healthy"
+          exit 1
+
+      - name: Test API endpoint
+        run: |
+          curl -f http://localhost:8080/api/employees
+
+      - name: Show logs on failure
+        if: failure()
+        run: docker compose logs
+
+      - name: Shutdown
+        if: always()
+        run: docker compose down -v --rmi
+
+  clean:
+    runs-on: self-hosted
+    needs: build-image
+
+    steps:
+      - name: Remove docker image
         run: |
           docker rmi company-management-service:latest
